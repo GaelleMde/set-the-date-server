@@ -40,7 +40,8 @@ if(regexPassword.test(password) === false) {
     await User.create({
         name,
         email,
-        password: encrypedPassword 
+        password: encrypedPassword, 
+        
     })
     res.sendStatus(201) 
 
