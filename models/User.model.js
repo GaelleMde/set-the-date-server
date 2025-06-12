@@ -1,6 +1,6 @@
 // ❗This is an example of a User Model.
 // TODO: Please make sure you edit the User model to whatever makes sense in your project.
-
+const mongoose = require("mongoose")
 const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(
@@ -33,7 +33,14 @@ const userSchema = new Schema(
       enum: ["user", "admin"],
       default: "user",
     },
-  },
+
+    favorites: 
+  [{
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'Event'
+  }]
+  }, 
+  
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,

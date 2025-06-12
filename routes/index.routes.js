@@ -9,4 +9,13 @@ router.get("/", (req, res, next) => {
 const authRouter = require("./auth.routes");
 router.use("/auth", authRouter);
 
+const eventRouter = require("./event.routes")
+router.use("/event", eventRouter)
+
+const commentRouter = require("./comment.routes")
+router.use("/comment", commentRouter)
+
+const userRouter = require("./comment.routes")
+router.use("/user", userRouter)
+
 module.exports = router;
