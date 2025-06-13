@@ -1,13 +1,13 @@
 const express = require("express")
 const router = express.Router()
-const  verifyToken  = require("../middlewares/auth.middlewares")
+const  {verifyToken, verifyAdmin}  = require("../middlewares/auth.middlewares")
 
 
 // Import model
 const Event = require ("../models/Event.model");
 
 // Create event ➜ POST "api/event"
-router.post("/", verifyToken, async (req,res,next) => {
+router.post("/", verifyToken, verifyAdmin, async (req,res,next) => {
     console.log("ruta ok")
     console.log(req.body)
 
@@ -67,7 +67,7 @@ try {
 })
 
 // Edit the details of one event ➜  PUT "api/event/:eventId"
-router.put("/:eventId", verifyToken, async (req, res, next) => {
+router.put("/:eventId", verifyToken, verifyAdmin, async (req, res, next) => {
 console.log(req.params)
 console.log(req.body)
 
@@ -82,7 +82,7 @@ res.status(200).json(eventEdited)
 })
 
 // Delete one event ➜  DELETE "api/event/:eventId"
-router.delete("/:eventId", verifyToken, async (req, res, next) => {
+router.delete("/:eventId", verifyToken, verifyAdmin, async (req, res, next) => {
    try {
       await Event.findByIdAndDelete(req.params.eventId)
       res.status(202).json({ message: "Event deleted" });

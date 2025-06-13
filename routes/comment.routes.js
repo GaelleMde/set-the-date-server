@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const  verifyToken  = require("../middlewares/auth.middlewares")
+const  {verifyToken}  = require("../middlewares/auth.middlewares")
 
 //importar modelo 
 const Comment = require("../models/Comment.model")
