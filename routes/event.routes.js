@@ -1,13 +1,13 @@
 const express = require("express")
 const router = express.Router()
-
+const  verifyToken  = require("../middlewares/auth.middlewares")
 
 
 // Import model
 const Event = require ("../models/Event.model");
 
 // Create event ➜ POST "api/event"
-router.post("/", async (req,res,next) => {
+router.post("/", verifyToken, async (req,res,next) => {
     console.log("ruta ok")
     console.log(req.body)
 
@@ -36,7 +36,7 @@ res.status(201).json({ message: 'Event created'})
 })
 
 // List all the events by date ➜ GET "api/event"
-router.get("/", async (req,res,next) => {
+router.get("/", verifyToken, async (req,res,next) => {
 
 try {
     
@@ -51,7 +51,7 @@ res.json(allevents)
 })
 
 // Get the details of one event ➜  GET "api/event/:eventId"
-router.get("/:eventId", async (req, res, next) => {
+router.get("/:eventId", verifyToken,  async (req, res, next) => {
 
     
 console.log(req.params)
@@ -67,7 +67,7 @@ try {
 })
 
 // Edit the details of one event ➜  PUT "api/event/:eventId"
-router.put("/:eventId", async (req, res, next) => {
+router.put("/:eventId", verifyToken, async (req, res, next) => {
 console.log(req.params)
 console.log(req.body)
 
@@ -82,7 +82,7 @@ res.status(200).json(eventEdited)
 })
 
 // Delete one event ➜  DELETE "api/event/:eventId"
-router.delete("/:eventId", async (req, res, next) => {
+router.delete("/:eventId", verifyToken, async (req, res, next) => {
    try {
       await Event.findByIdAndDelete(req.params.eventId)
       res.status(202).json({ message: "Event deleted" });
