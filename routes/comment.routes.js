@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const  {verifyToken}  = require("../middlewares/auth.middlewares")
+const  {verifyToken, verifyAdmin}  = require("../middlewares/auth.middlewares")
 
 //importar modelo 
 const Comment = require("../models/Comment.model")
@@ -50,5 +50,14 @@ res.json(commentDetails)
 
 })
 
+// Delete comment ➜ GET "api/comment"
+router.delete("/:commentId", verifyToken, verifyAdmin, async (req, res, next) => {
+   try {
+      await Comment.findByIdAndDelete(req.params.commentId)
+      res.status(202).json({ message: "Comment deleted" });
+   } catch (error) {
+     next(error)
+   }
+})
 
 module.exports = router
