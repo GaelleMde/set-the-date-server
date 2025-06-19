@@ -39,8 +39,23 @@ res.status(201).json({ message: 'Event created'})
 router.get("/", verifyToken, async (req,res,next) => {
 
 try {
-    
 const allevents = await Event.find()
+.sort({ startDate: 1 })
+res.json(allevents)
+
+} catch (error) {
+   next(error) 
+}
+})
+
+// List only upcoming events (starting today or later) ➜ GET "api/event/upcoming"
+router.get("/upcoming", verifyToken, async (req,res,next) => {
+
+try {
+   
+const today = new Date();
+console.log(today)
+const allevents = await Event.find({ startDate: { $gte: today } })
 .sort({ startDate: 1 })
 res.json(allevents)
 

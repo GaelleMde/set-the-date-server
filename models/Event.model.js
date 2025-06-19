@@ -7,8 +7,6 @@ const eventSchema = new Schema ({
   name: {
     type: String,
     required: [true, 'Event name is required'],
-    minlength: [3, 'Event name must be at least 3 characters'],
-    maxlength: [50, 'Event name cannot exceed 50 characters'],
     trim: true
   },
   location: {
