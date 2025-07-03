@@ -28,7 +28,7 @@ console.log(req.body)
 
 // List all the comments of one event ➜ GET "api/comment"
 
-router.get("/event/:eventId",  verifyToken, async (req,res, next) => {
+router.get("/event/:eventId",  async (req,res, next) => {
 
 console.log(req.params.eventId)
 

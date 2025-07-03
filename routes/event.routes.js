@@ -36,7 +36,7 @@ res.status(201).json({ message: 'Event created'})
 })
 
 // List all the events by date ➜ GET "api/event"
-router.get("/", verifyToken, async (req,res,next) => {
+router.get("/", async (req,res,next) => {
 
 try {
 const allevents = await Event.find()
@@ -49,13 +49,23 @@ res.json(allevents)
 })
 
 // List only upcoming events (starting today or later) ➜ GET "api/event/upcoming"
-router.get("/upcoming", verifyToken, async (req,res,next) => {
+router.get("/upcoming",  async (req,res,next) => {
 
 try {
    
 const today = new Date();
 console.log(today)
-const allevents = await Event.find({ startDate: { $gte: today } })
+const allevents = await Event.find({
+  $or: [
+    { startDate: { $gte: today } },
+    {
+      $and: [
+        { startDate: { $lte: today } },
+        { endDate: { $gte: today } }
+      ]
+    }
+  ]
+})
 .sort({ startDate: 1 })
 res.json(allevents)
 
@@ -66,7 +76,7 @@ res.json(allevents)
 })
 
 // Get the details of one event ➜  GET "api/event/:eventId"
-router.get("/:eventId", verifyToken,  async (req, res, next) => {
+router.get("/:eventId",  async (req, res, next) => {
 
     
 console.log(req.params)
